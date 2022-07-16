@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>领红包啦</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script>
+      function getQueryString(name) {
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        let r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+          return decodeURIComponent(r[2]);
+        }
+        return null;
+      }
+      console.log(getQueryString("form"));
+      window.location.href = `http://gw-test.fshows.com/api/public/aliPayRedPacket?form=${getQueryString(
+        "form"
+      )}`;
+    </script>
+  </head>
+  <body></body>
+</html>
