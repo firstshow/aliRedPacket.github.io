@@ -5,37 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>领红包啦</title>
-    <link rel="stylesheet" href="./index.css" />
-    <script>
-      var u = navigator.userAgent;
-      var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
-      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      function getQueryString(name) {
-        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        let r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-          return decodeURIComponent(r[2]);
-        }
-        return null;
+    <style>
+      body {
+        text-align: center;
       }
-      function copy(str) {
-        var save = function (e) {
-          e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
-          e.preventDefault(); //阻止默认行为
-        };
-        document.addEventListener("copy", save);
-        document.execCommand("copy"); //使文档处于可编辑状态，否则无效
+      .btn {
+        display: inline-block;
+        margin-top: 200px;
+        padding: 15px 45px;
+        border: none;
+        background-color: #327af6;
+        color: #fff;
       }
-      console.log(getQueryString("form"));
-      if (!isAndroid) {
-        window.location.href = `http://gw-test.fshows.com/api/public/aliPayRedPacket?form=${getQueryString(
-          "form"
-        )}`;
-      } else {
-        copy("ZgZ0Jwi30jQ");
-        alert("打开支付宝->吱口令进入后即可领取红包");
+      #zkl {
+        position: absolute;
+        top: 0;
+        left: 0;
+        visibility: hidden;
       }
-    </script>
+    </style>
   </head>
-  <body></body>
+  <body>
+    <button
+      id="copyCode"
+      class="btn"
+      data-clipboard-target="#taokouling"
+      data-clipboard-action="copy"
+    >
+      一键领支付宝红包
+    </button>
+    <input id="zkl" type="text" value="112233" />
+  </body>
+  <script>
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
+    var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    function getQueryString(name) {
+      let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      let r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return decodeURIComponent(r[2]);
+      }
+      return null;
+    }
+    if (isiOS) {
+      window.location.href = `http://gw-test.fshows.com/api/public/aliPayRedPacket?form=${getQueryString(
+        "form"
+      )}`;
+    } else {
+      var zkl = document.querySelector("#zkl");
+      zkl.select();
+      document.addEventListener("copy", function (res) {
+        alert("打开支付宝->吱口令进入后即可领取红包");
+      });
+    }
+
+    var btn = document.querySelector("#copyCode");
+    btn.onclick = function () {
+      document.execCommand("copy");
+    };
+  </script>
 </html>
