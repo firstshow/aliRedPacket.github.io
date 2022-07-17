@@ -7,6 +7,9 @@
     <title>领红包啦</title>
     <link rel="stylesheet" href="./index.css" />
     <script>
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
       function getQueryString(name) {
         let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         let r = window.location.search.substr(1).match(reg);
@@ -15,10 +18,23 @@
         }
         return null;
       }
+      function copy(str) {
+        var save = function (e) {
+          e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
+          e.preventDefault(); //阻止默认行为
+        };
+        document.addEventListener("copy", save);
+        document.execCommand("copy"); //使文档处于可编辑状态，否则无效
+      }
       console.log(getQueryString("form"));
-      window.location.href = `http://gw-test.fshows.com/api/public/aliPayRedPacket?form=${getQueryString(
-        "form"
-      )}`;
+      if (!isAndroid) {
+        window.location.href = `http://gw-test.fshows.com/api/public/aliPayRedPacket?form=${getQueryString(
+          "form"
+        )}`;
+      } else {
+        copy("ZgZ0Jwi30jQ");
+        alert("打开支付宝->吱口令进入后即可领取红包");
+      }
     </script>
   </head>
   <body></body>
