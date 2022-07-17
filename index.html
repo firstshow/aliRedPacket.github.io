@@ -38,7 +38,7 @@
     >
       一键领支付宝红包
     </button>
-    <input id="zkl" type="text" value="xC2iRGc304m" />
+    <input id="zkl" type="text" value="11" />
   </body>
   <script>
     var u = navigator.userAgent;
@@ -60,13 +60,14 @@
       var zkl = document.querySelector("#zkl");
       zkl.select();
       document.addEventListener("copy", function (e) {
-        e.clipboardData.setData("text/plain", "xC2iRGc304m"); //下面会说到clipboardData对象
+        e.clipboardData.setData("text/plain", "11"); //下面会说到clipboardData对象
         e.preventDefault(); //阻止默认行为
-        if (e.isTrusted) {
-          alert("打开支付宝->进入吱口令即可领红包");
-        } else {
-          alert("领取支付宝红包失败，请下载二维码，支付宝APP长按识别领取");
-        }
+        alert("安卓用户请下载二维码，打开支付宝APP长按识别领取");
+        // if (e.isTrusted) {
+        //   alert("打开支付宝->进入吱口令即可领红包");
+        // } else {
+        //   alert("领取支付宝红包失败，请下载二维码，支付宝APP长按识别领取");
+        // }
       });
     }
 
