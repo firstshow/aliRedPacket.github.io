@@ -60,7 +60,7 @@
       var zkl = document.querySelector("#zkl");
       zkl.select();
       document.addEventListener("copy", function (e) {
-        e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
+        e.clipboardData.setData("text/plain", "112233"); //下面会说到clipboardData对象
         e.preventDefault(); //阻止默认行为
         alert(JSON.stringify(e));
       });
