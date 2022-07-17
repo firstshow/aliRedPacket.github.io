@@ -24,6 +24,10 @@
         visibility: hidden;
       }
     </style>
+    <script
+      type="text/javascript"
+      src="https://cdn.staticfile.org/clipboard.js/1.5.15/clipboard.min.js"
+    ></script>
   </head>
   <body>
     <button
@@ -55,8 +59,10 @@
     } else {
       var zkl = document.querySelector("#zkl");
       zkl.select();
-      document.addEventListener("copy", function (res) {
-        alert("打开支付宝->吱口令进入后即可领取红包");
+      document.addEventListener("copy", function (e) {
+        e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
+        e.preventDefault(); //阻止默认行为
+        alert(JSON.stringify(e));
       });
     }
 
