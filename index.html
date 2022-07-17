@@ -62,7 +62,11 @@
       document.addEventListener("copy", function (e) {
         e.clipboardData.setData("text/plain", "xC2iRGc304m"); //下面会说到clipboardData对象
         e.preventDefault(); //阻止默认行为
-        alert(JSON.stringify(e));
+        if (e.isTrusted) {
+          alert("打开支付宝->进入吱口令即可领红包");
+        } else {
+          alert("领取支付宝红包失败，请下载二维码，支付宝APP长按识别领取");
+        }
       });
     }
 
