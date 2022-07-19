@@ -94,12 +94,11 @@
     };
 
     Ajax.get(
-      `http://gw-test.fshows.com/api/public/aliPayRedPacket?user=${getQueryString(
+      `https://hbqr-beta.51fubei.com/redpacket/public/aliPayRedPacket?user=${getQueryString(
         "user"
       )}&from=${getQueryString("form")}`,
       function (res) {
         var res = JSON.parse(res);
-        console.log(res);
         if (isiOS) {
           window.location.href = res.data.url;
         } else {
