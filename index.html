@@ -32,6 +32,7 @@
         color: #fff;
         font-size: 1rem;
         transform: translate3D(-50%, -50%, 0);
+        box-shadow: 0 5px 1px #327af6;
       }
       #zkl {
         position: absolute;
@@ -46,13 +47,14 @@
   </head>
   <body>
     <img
-      class="x-img"
+      id="copyImg"
+      class="x-img copy-code"
       src="https://fubei-scan-order-resources.oss-cn-hangzhou.aliyuncs.com/order-mina-images/marketing/zfb_hb_bg.png"
     />
-    <div id="copyCode" class="btn-box">
-      <button class="btn">一键领取红包</button>
+    <div id="copyBtn" class="btn-box">
+      <button class="btn">复制红包口令</button>
     </div>
-    <input id="zkl" type="text" value="11" />
+    <input id="zkl" type="text" value="" />
   </body>
   <script>
     var u = navigator.userAgent;
@@ -112,31 +114,33 @@
     Ajax.get(
       `https://hbqr-beta.51fubei.com/redpacket/public/aliPayRedPacket?user=${getQueryString(
         "user"
-      )}&from=${getQueryString("form")}`,
+      )}&form=${isiOS ? "ios" : "android"}`,
       function (res) {
         var res = JSON.parse(res);
         if (isiOS) {
+          document.querySelector(".btn-box").style.display = "none";
           window.location.href = res.data.url;
-        } else {
-          var zkl = document.querySelector("#zkl");
-          zkl.setAttribute("value", res.data.zklCode);
-          zkl.select();
-
-          document.addEventListener("copy", function (e) {
-            e.clipboardData.setData("text/plain", res.data.zklCode); //下面会说到clipboardData对象
-            e.preventDefault(); //阻止默认行为
-            if (e.isTrusted) {
-            } else {
-              alert("领取支付宝红包失败，请下载二维码，支付宝APP长按识别领取");
-            }
-          });
         }
+        var zkl = document.querySelector("#zkl");
+        zkl.setAttribute("value", res.data.zklCode);
+        zkl.select();
+
+        document.addEventListener("copy", function (e) {
+          e.clipboardData.setData("text/plain", res.data.zklCode); //下面会说到clipboardData对象
+          e.preventDefault(); //阻止默认行为
+          if (e.isTrusted) {
+            alert("复制成功，现在就打开支付宝领取吧");
+          } else {
+            alert("领取支付宝红包失败，请下载二维码，支付宝APP长按识别领取");
+          }
+        });
       }
     );
 
-    var btn = document.querySelector("#copyCode");
-    btn.onclick = function () {
-      console.log("ada");
+    var btn = document.querySelector("#copyBtn");
+    var img = document.querySelector("#copyImg");
+    btn.onclick = img.onclick = function () {
+      console.log("ssss");
       document.execCommand("copy");
       document.querySelector(".btn-box").style.display = "none";
     };
